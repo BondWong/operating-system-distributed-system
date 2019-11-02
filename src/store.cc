@@ -8,9 +8,8 @@
 #include <grpcpp/grpcpp.h>
 #include <grpc/support/log.h>
 
-#include "vendor_client.cpp"
-#include "store.grpc.pb.h"
 #include "vendor_client.hpp"
+#include "store.grpc.pb.h"
 
 const std::string VENDOR_ADDRESSES = "./vendor_addresses.txt";
 
