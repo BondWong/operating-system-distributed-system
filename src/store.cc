@@ -107,9 +107,9 @@ private:
 		threadpool* thread_pool;
 		std::vector<std::string> ip_addresses;
 
-		store::Store::ProductQuery request_;
-		store::Store::ProductReply reply_;
-		grpc::ServerAsyncResponseWriter<store::Store::ProductReply> responder_;
+		store::ProductQuery request_;
+		store::ProductReply reply_;
+		grpc::ServerAsyncResponseWriter<store::ProductReply> responder_;
 
 		// Let's implement a tiny state machine with the following states.
 		enum CallStatus { CREATE, PROCESS, FINISH };

@@ -34,7 +34,7 @@ class VendorClient {
 			store::ProductInfo* product_info;
 
 			int number_queries = 0;
-			while (cq_->Next(&got_tag, &ok)) {
+			while (cq_.Next(&got_tag, &ok)) {
 				AsyncClientCall* call = static_cast<AsyncClientCall*>(got_tag);
 				GPR_ASSERT(ok);
 
