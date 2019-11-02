@@ -63,7 +63,7 @@ private:
       } else if (status_ == PROCESS) {
 				std::ifstream address_file (VENDOR_ADDRESSES);
 				if (!address_file.is_open()) {
-					std::cerr << "Failed to open file " << filename << std::endl;
+					std::cerr << "Failed to open file " << VENDOR_ADDRESSES << std::endl;
 					exit(EXIT_FAILURE);
 				}
 
@@ -88,7 +88,7 @@ private:
 					threads_.push_back(thread_);
 					vc.getProductBid(request_.product_name());
 				}
-				for(auto thread_: threads_) thread_.join();
+				for (std::vector<std::thread>::iterator it = threads_.begin() ; it != threads_.end(); ++it) it->join()
 
 				status_ = FINISH;
 				responder_.Finish(reply_, grpc::Status::OK, this);
