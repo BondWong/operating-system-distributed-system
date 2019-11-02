@@ -18,7 +18,7 @@ public:
 			Runnable(){}
 			~Runnable(){}
 			virtual void run() = 0;
-	}
+	};
 
 	threadpool(int num_threads);
 	~threadpool();
