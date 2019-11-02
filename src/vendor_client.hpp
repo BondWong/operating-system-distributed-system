@@ -23,8 +23,7 @@ class VendorClient {
       call->response_reader->Finish(&call->reply, &call->status, (void*)call);
     }
 
-    // void AsyncCompleteRpc(store::ProductReply& product_reply) {
-    void AsyncCompleteRpc() {
+    static void AsyncCompleteRpc(store::ProductReply& product_reply) {
 			void* got_tag;
 			bool ok = false;
 			store::ProductInfo* product_info;
@@ -63,7 +62,7 @@ class VendorClient {
     };
 
     std::unique_ptr<vendor::Vendor::Stub> stub_;
-    grpc::CompletionQueue cq_;
+    static grpc::CompletionQueue cq_;
 };
 
 #endif /* VENDOR_CLIENT_HPP */
