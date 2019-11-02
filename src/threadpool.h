@@ -13,12 +13,10 @@
 class threadpool {
 public:
 	// replicate Java's Runnable interface, this will do the actual work
-	class Runnable {
-		public:
-			Runnable(){}
-			~Runnable(){}
-			virtual void run() = 0;
+	struct Runnable {
+		std::function<void()> run;
 	};
+	typedef struct Runnable Runnable;
 
 	threadpool(int num_threads);
 	~threadpool();

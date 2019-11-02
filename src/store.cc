@@ -101,7 +101,6 @@ private:
 		grpc::ServerContext ctx_;
 
 		threadpool* thread_pool;
-		std::function<void(threadpool::Runnable)> worker_function;
 		std::vector<std::string> ip_addresses;
 
 		store::Store::ProductQuery request_;
