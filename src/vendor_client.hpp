@@ -36,13 +36,13 @@ class VendorClient {
 					std::cout << "Bid received: " << got_tag << " "
             << "vendor id " << call->reply.vendor_id() << " "
             << "price " << call->reply.price() << std::endl;
-					// product_info = product_reply.add_products();
-					// product_info->set_price(call->reply.price());
-					// product_info->set_vendor_id(call->reply.vendor_id());
-					// std::cout << "Added " << " "
-          //   << product_info->vendor_id() << " "
-          //   << product_info->price()
-          //   << " size now " << product_reply.products_size() << std::endl;
+					product_info = product_reply.add_products();
+					product_info->set_price(call->reply.price());
+					product_info->set_vendor_id(call->reply.vendor_id());
+					std::cout << "Added " << " "
+            << product_info->vendor_id() << " "
+            << product_info->price()
+            << " size now " << product_reply.products_size() << std::endl;
 				} else {
 					std::cout << "RPC failed" << std::endl;
 				}
