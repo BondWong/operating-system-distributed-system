@@ -81,10 +81,14 @@ private:
         // part of its FINISH state.
         new CallData(service_, cq_);
 
+				std::vector<std::thread> threads_;
 				for (auto ip_addr: ip_addresses) {
 					VendorClient vc = VendorClient(grpc::CreateChannel(ip_addr, grpc::InsecureChannelCredentials()));
+					std::thread thread_ = std::thread(&VendorClient::AsyncCompleteRpc, &vc);
+					threads_.push_back(thread_);
 					vc.getProductBid(request_.product_name());
 				}
+				for(auto thread_: threads_) thread_.join();
 
 				status_ = FINISH;
 				responder_.Finish(reply_, grpc::Status::OK, this);

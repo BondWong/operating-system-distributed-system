@@ -20,7 +20,7 @@ class VendorClient {
       call->response_reader->Finish(&call->reply, &call->status, (void*)call);
     }
 
-    static void AsyncCompleteRpc(int number_vendors, store::ProductReply& product_reply) {
+    void AsyncCompleteRpc(int number_vendors, store::ProductReply& product_reply) {
 			void* got_tag;
 			bool ok = false;
 
