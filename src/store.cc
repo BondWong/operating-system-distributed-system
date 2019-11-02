@@ -84,6 +84,14 @@ private:
 				for (auto ip_addr: ip_addresses) {
 					VendorClient vc = VendorClient(grpc::CreateChannel(ip_addr, grpc::InsecureChannelCredentials()));
 					vendor::BidReply bid_reply_ = vc.getProductBid(request_.product_name());
+					store::ProductInfo* product_info;
+					product_info = reply_.add_products();
+	  			product_info->set_price(bid_reply_.price());
+	  			product_info->set_vendor_id(bid_reply_.vendor_id());
+	  			std::cout << "Added "
+						<< " " << product_info->vendor_id()
+						<< " " << product_info->price()
+	          << " size now " << reply_.products_size() << std::endl;
 				}
 
 				status_ = FINISH;

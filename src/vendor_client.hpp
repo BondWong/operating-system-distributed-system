@@ -36,45 +36,10 @@ class VendorClient {
   			std::cout << "Bid received: " << got_tag << " "
           << "vendor id " << reply.vendor_id() << " "
           << "price " << reply.price() << std::endl;
-  			// product_info = product_reply.add_products();
-  			// product_info->set_price(call->reply.price());
-  			// product_info->set_vendor_id(call->reply.vendor_id());
-  			// std::cout << "Added " << " "
-        //   << product_info->vendor_id() << " "
-        //   << product_info->price()
-        //   << " size now " << product_reply.products_size() << std::endl;
         return reply;
       }
       else exit(EXIT_FAILURE);
     }
-
-    // void AsyncCompleteRpc(store::ProductReply& product_reply) {
-		// 	void* got_tag;
-		// 	bool ok = false;
-		// 	store::ProductInfo* product_info;
-    //
-		// 	while (cq_.Next(&got_tag, &ok)) {
-		// 		AsyncClientCall* call = static_cast<AsyncClientCall*>(got_tag);
-		// 		GPR_ASSERT(ok);
-    //
-		// 		if (call->status.ok()) {
-		// 			std::cout << "Bid received: " << got_tag << " "
-    //         << "vendor id " << call->reply.vendor_id() << " "
-    //         << "price " << call->reply.price() << std::endl;
-		// 			product_info = product_reply.add_products();
-		// 			product_info->set_price(call->reply.price());
-		// 			product_info->set_vendor_id(call->reply.vendor_id());
-		// 			std::cout << "Added " << " "
-    //         << product_info->vendor_id() << " "
-    //         << product_info->price()
-    //         << " size now " << product_reply.products_size() << std::endl;
-		// 		} else {
-		// 			std::cout << "RPC failed" << std::endl;
-		// 		}
-		// 		delete call;
-		// 	}
-		// 	std::cout << "About to exit " << product_reply.products_size() << std::endl;
-		// }
 
 	private:
     std::unique_ptr<vendor::Vendor::Stub> stub_;
