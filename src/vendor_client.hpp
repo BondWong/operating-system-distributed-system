@@ -23,7 +23,8 @@ class VendorClient {
       call->response_reader->Finish(&call->reply, &call->status, (void*)call);
     }
 
-    void AsyncCompleteRpc(store::ProductReply& product_reply) {
+    // void AsyncCompleteRpc(store::ProductReply& product_reply) {
+    void AsyncCompleteRpc() {
 			void* got_tag;
 			bool ok = false;
 			store::ProductInfo* product_info;
@@ -48,7 +49,7 @@ class VendorClient {
 				}
 				delete call;
 			}
-			std::cout << "About to exit " << product_reply.products_size() << std::endl;
+			// std::cout << "About to exit " << product_reply.products_size() << std::endl;
 		}
 
 	private:
