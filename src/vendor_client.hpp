@@ -34,8 +34,8 @@ class VendorClient {
 
 				if (call->status.ok()) {
 					std::cout << "Bid received: " << got_tag << " "
-            << "vendor id" << call->reply.vendor_id() << " "
-            << "price" << call->reply.price() << std::endl;
+            << "vendor id " << call->reply.vendor_id() << " "
+            << "price " << call->reply.price() << std::endl;
 					product_info = product_reply.add_products();
 					product_info->set_price(call->reply.price());
 					product_info->set_vendor_id(call->reply.vendor_id());
