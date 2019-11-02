@@ -20,7 +20,7 @@ class VendorClient {
       call->response_reader->Finish(&call->reply, &call->status, (void*)call);
     }
 
-    static void AsyncCompleteRpc(int number_vendors, store::Store::ProductReply& product_reply) {
+    static void AsyncCompleteRpc(int number_vendors, store::ProductReply& product_reply) {
 			void* got_tag;
 			bool ok = false;
 
@@ -31,10 +31,10 @@ class VendorClient {
 					std::unique_ptr<grpc::ClientAsyncResponseReader<vendor::BidReply>> response_reader;
 			};
 
-			store::Store::ProductInfo* product_info;
+			store::ProductInfo* product_info;
 
 			int number_queries = 0;
-			while (cq->Next(&got_tag, &ok)) {
+			while (cq_->Next(&got_tag, &ok)) {
 				AsyncClientCall* call = static_cast<AsyncClientCall*>(got_tag);
 				GPR_ASSERT(ok);
 

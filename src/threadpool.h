@@ -38,7 +38,7 @@ threadpool::threadpool(int num_threads) {
 			std::unique_lock<std::mutex> lock(mutex);
 
 			if (!shared_queue.empty()) {
-				Runnable value;
+				Runnable job;
 				job = shared_queue.front();
 				shared_queue.pop();
 
