@@ -23,20 +23,12 @@ class VendorClient {
       call->response_reader->Finish(&call->reply, &call->status, (void*)call);
     }
 
-    void AsyncCompleteRpc(int number_vendors, store::ProductReply& product_reply) {
+    void AsyncCompleteRpc(store::ProductReply& product_reply) {
 			void* got_tag;
 			bool ok = false;
-
-			struct AsyncClientCall {
-					vendor::BidReply reply;
-					grpc::ClientContext context;
-					grpc::Status status;
-					std::unique_ptr<grpc::ClientAsyncResponseReader<vendor::BidReply>> response_reader;
-			};
-
 			store::ProductInfo* product_info;
-
 			int number_queries = 0;
+
 			while (cq_.Next(&got_tag, &ok)) {
 				AsyncClientCall* call = static_cast<AsyncClientCall*>(got_tag);
 				GPR_ASSERT(ok);
@@ -52,7 +44,6 @@ class VendorClient {
 				}
 				delete call;
 				number_queries++;
-				if (number_queries == number_vendors) break;
 			}
 			std::cout << "About to exit " << product_reply.products_size() << std::endl;
 		}

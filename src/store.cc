@@ -84,7 +84,7 @@ private:
 				std::vector<std::thread> threads_;
 				for (auto ip_addr: ip_addresses) {
 					VendorClient vc = VendorClient(grpc::CreateChannel(ip_addr, grpc::InsecureChannelCredentials()));
-					threads_.push_back(std::thread(&VendorClient::AsyncCompleteRpc, &vc));
+					threads_.push_back(std::thread(&vc::AsyncCompleteRpc, std::ref(reply_)));
 					vc.getProductBid(request_.product_name());
 				}
 				for (std::vector<std::thread>::iterator it = threads_.begin() ; it != threads_.end(); ++it) it->join();
