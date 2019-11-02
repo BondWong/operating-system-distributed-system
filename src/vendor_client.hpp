@@ -27,23 +27,26 @@ class VendorClient {
 			void* got_tag;
 			bool ok = false;
 			store::ProductInfo* product_info;
-			int number_queries = 0;
 
 			while (cq_.Next(&got_tag, &ok)) {
 				AsyncClientCall* call = static_cast<AsyncClientCall*>(got_tag);
 				GPR_ASSERT(ok);
 
 				if (call->status.ok()) {
-					std::cout << "Bid received: " << got_tag << " " << call->reply.vendor_id() << " " << call->reply.price() << std::endl;
+					std::cout << "Bid received: " << got_tag << " "
+            << "vendor id" << call->reply.vendor_id() << " "
+            << "price" << call->reply.price() << std::endl;
 					product_info = product_reply.add_products();
 					product_info->set_price(call->reply.price());
 					product_info->set_vendor_id(call->reply.vendor_id());
-					std::cout << "Added " << number_queries << " " << product_info->price() << " " << product_info->vendor_id() << " size now " << product_reply.products_size() << std::endl;
+					std::cout << "Added " << " "
+            << product_info->vendor_id() << " "
+            << product_info->price()
+            << " size now " << product_reply.products_size() << std::endl;
 				} else {
 					std::cout << "RPC failed" << std::endl;
 				}
 				delete call;
-				number_queries++;
 			}
 			std::cout << "About to exit " << product_reply.products_size() << std::endl;
 		}

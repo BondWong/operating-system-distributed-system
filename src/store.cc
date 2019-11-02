@@ -135,19 +135,13 @@ int main(int argc, char** argv) {
 	int num_max_threads;
 	std::string server_addr;
 
-	if (argc == 3) {
-		server_addr = std::string(argv[1]);
-		num_max_threads = std::min( 20, std::max(0,atoi(argv[2])));
-	}
-	else if (argc == 2) {
-		server_addr = std::string(argv[1]);
-		num_max_threads = 4;
-	}
-	else {
-		server_addr = "0.0.0.0:50051";
-		num_max_threads = 4;
+	if (argc != 3) {
+		std::cerr << "To run this command: ./store host:port num_max_threads" << std::endl;
+		exit(EXIT_FAILURE);
 	}
 
+	server_addr = std::string(argv[1]);
+	num_max_threads = std::min( 20, std::max(0,atoi(argv[2])));
 	StoreServer storeServer(server_addr, num_max_threads);
 	storeServer.run();
 
