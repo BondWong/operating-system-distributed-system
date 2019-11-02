@@ -10,6 +10,7 @@
 
 #include "vendor_client.cpp"
 #include "store.grpc.pb.h"
+#include "vendor_client.hpp"
 
 const std::string VENDOR_ADDRESSES = "./vendor_addresses.txt";
 
@@ -88,7 +89,7 @@ private:
 					threads_.push_back(thread_);
 					vc.getProductBid(request_.product_name());
 				}
-				for (std::vector<std::thread>::iterator it = threads_.begin() ; it != threads_.end(); ++it) it->join()
+				for (std::vector<std::thread>::iterator it = threads_.begin() ; it != threads_.end(); ++it) it->join();
 
 				status_ = FINISH;
 				responder_.Finish(reply_, grpc::Status::OK, this);
