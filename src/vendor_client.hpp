@@ -1,3 +1,6 @@
+#ifndef VENDOR_CLIENT_HPP
+#define VENDOR_CLIENT_HPP
+
 #include <grpcpp/grpcpp.h>
 #include <grpc/support/log.h>
 
@@ -67,3 +70,5 @@ class VendorClient {
     std::unique_ptr<vendor::Vendor::Stub> stub_;
     grpc::CompletionQueue cq_;
 };
+
+#endif /* VENDOR_CLIENT_HPP */
