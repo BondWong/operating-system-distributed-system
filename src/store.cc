@@ -82,8 +82,10 @@ private:
         new CallData(service_, cq_);
 
 				for (auto ip_addr: ip_addresses) {
+					// async vendor client sends a request to vendor server and returns the reply
 					VendorClient vc = VendorClient(grpc::CreateChannel(ip_addr, grpc::InsecureChannelCredentials()));
 					vendor::BidReply bid_reply_ = vc.getProductBid(request_.product_name());
+					// aggregate bid replies
 					store::ProductInfo* product_info;
 					product_info = reply_.add_products();
 	  			product_info->set_price(bid_reply_.price());
@@ -104,20 +106,16 @@ private:
 		}
 
 	private:
+		threadpool* thread_pool;
+		std::vector<std::string> ip_addresses;
 		store::Store::AsyncService* service_;
 		grpc::ServerCompletionQueue* cq_;
 		grpc::ServerContext ctx_;
-
-		threadpool* thread_pool;
-		std::vector<std::string> ip_addresses;
-
-		store::ProductQuery request_;
 		store::ProductReply reply_;
+		store::ProductQuery request_;
 		grpc::ServerAsyncResponseWriter<store::ProductReply> responder_;
-
-		// Let's implement a tiny state machine with the following states.
 		enum CallStatus { CREATE, PROCESS, FINISH };
-		CallStatus status_;  // The current serving state.
+		CallStatus status_;
 	};
 
 	void handleRpcs() {
@@ -136,7 +134,6 @@ private:
 
 
 int main(int argc, char** argv) {
-	// command line handling copied from provided test harness
 	int num_max_threads;
 	std::string server_addr;
 

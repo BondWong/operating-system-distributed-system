@@ -61,6 +61,13 @@ threadpool::threadpool(int num_threads) {
 	for (int i = 0; i < num_threads; i++) threads.push_back(std::thread(handler));
 }
 
+threadpool::~threadpool() {
+	terminate();
+	for (std::thread &t: threads) {
+		if (t.joinable()) t.join();
+	}
+}
+
 void threadpool::execute(Runnable job) {
 	// critical section
 	{
@@ -68,13 +75,6 @@ void threadpool::execute(Runnable job) {
 	  if (!is_stop) shared_queue.push(job);
 	}
 	condition.notify_one();
-}
-
-threadpool::~threadpool() {
-	terminate();
-	for (std::thread &t: threads) {
-		if (t.joinable()) t.join();
-	}
 }
 
 void threadpool::terminate() {

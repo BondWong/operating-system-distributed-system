@@ -15,17 +15,19 @@ class VendorClient {
 
     vendor::BidReply getProductBid(const std::string& product_name) {
       vendor::BidQuery request;
-      request.set_product_name(product_name);
-
       vendor::BidReply reply;
+
       grpc::ClientContext context;
       grpc::Status status;
       std::unique_ptr<grpc::ClientAsyncResponseReader<vendor::BidReply>> rpc;
 
+      // make async rpc
+      request.set_product_name(product_name);
       rpc = stub_->PrepareAsyncgetProductBid(&context, request, &cq_);
       rpc->StartCall();
       rpc->Finish(&reply, &status, this);
 
+      // handles reply
       void* got_tag;
 			bool ok = false;
       GPR_ASSERT(cq_.Next(&got_tag, &ok));
